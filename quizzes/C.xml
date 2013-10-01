@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+    <desc> <!--Markdown ftw-->
+        Lorem Impsum
+        ==========
+        Blablablabla
+    </desc>
+    <questions>
+        <q>
+            <desc syntax="C" name="main.c">
+            <![CDATA[
+                #include<stdio>
+                int main(int argc, char** argv){
+                    return -1;
+                }
+            ]]></desc>
+            <desc syntax="bash" name="plzrun.sh">
+            <![CDATA[
+                gcc main.c -O2 -o main.o
+                ./main.o
+            ]]></desc>
+            <desc>What happen when I run ./plzrun.sh?</desc>
+            <answers type="radio"><!-- radio, checkbox, text -->
+                <a>Kernel Panic</a>
+                <a>Blue Screen</a>
+                <!-- Default score is 0 -->
+                <a score="1">Compile and run program</a>
+            </answers>
+        </q>
+    </questions>
+</quiz>
