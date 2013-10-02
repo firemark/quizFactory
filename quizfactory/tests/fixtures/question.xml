@@ -1,0 +1,9 @@
+<q>
+<!--Is not a valid XML file -->
+    <desc>a</desc>
+    <desc>b</desc>
+    <answers type='checkbox'>
+        <true>ok</true>
+        <false>not</false>
+    </answers>
+</q>

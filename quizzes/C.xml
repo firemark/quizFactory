@@ -21,10 +21,9 @@
             ]]></desc>
             <desc>What happen when I run ./plzrun.sh?</desc>
             <answers type="radio"><!-- radio, checkbox, text -->
-                <a>Kernel Panic</a>
-                <a>Blue Screen</a>
-                <!-- Default score is 0 -->
-                <a score="1">Compile and run program</a>
+                <false>Kernel Panic</false>
+                <false>Blue Screen</false>
+                <true>Compile and run program</true>
             </answers>
         </q>
     </questions>

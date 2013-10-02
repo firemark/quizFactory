@@ -1,5 +1,5 @@
 from flask import Flask
-import conf
+from quizfactory import conf
 
 
 class FiremarkFlask(Flask):
