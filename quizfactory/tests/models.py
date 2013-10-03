@@ -7,6 +7,7 @@ from quizfactory import models
 
 path = os.path.dirname(__file__)
 
+
 def get_path(name):
     return os.path.join(path, "fixtures", name)
 
@@ -18,7 +19,7 @@ class TestXML(unittest.TestCase):
         quiz = models.Quiz.load_from_file(filename)
 
         self.assertIsInstance(quiz.desc, models.Description)
-        self.assertEqual(len(quiz.questions), 1)
+        self.assertEqual(len(quiz.questions), 2)
 
         q = quiz.questions[0]
 
@@ -30,7 +31,7 @@ class TestXML(unittest.TestCase):
         desc = models.Description.from_xml(etree.fromstring(xml_str))
 
         self.assertEqual(desc.text, "main(){}")
-        self.assertEqual(desc.syntax, "C")
+        self.assertEqual(desc.syntax, "c")
         self.assertEqual(desc.name, "file.c")
 
     def test_answer(self):
@@ -57,3 +58,36 @@ class TestXML(unittest.TestCase):
         self.assertEqual(len(q.answers), 2)
         self.assertEqual(len(q.descs), 2)
         self.assertEqual(q.answer_type, 'checkbox')
+
+
+class TestDescription(unittest.TestCase):
+
+    def test_markdown(self):
+
+        from markdown import markdown
+
+        text = """
+Super Title
+=====
+Super Description Text
+            """
+        mark = markdown(text)
+
+        self.assertEquals(models.Description(text).html, mark)
+        self.assertEquals(models.Description(text, "markdown").html, mark)
+
+    def test_syntax(self):
+
+        from pygments import highlight
+        from pygments.lexers import CLexer
+        from pygments.formatters import HtmlFormatter
+
+        c_code = """
+            int main(int argc, char** argv){
+                printf(\"test\\n\"); 
+            }
+            """
+
+        html = highlight(c_code, CLexer(), HtmlFormatter())
+
+        self.assertEquals(models.Description(c_code, "c").html, html)

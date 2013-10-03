@@ -1,5 +1,14 @@
 from lxml import etree
 
+from markdown import markdown
+
+from pygments import highlight
+from pygments.util import ClassNotFound
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+
+formater = HtmlFormatter()
+
 
 class BaseModel(object):
 
@@ -36,14 +45,25 @@ class Answer(BaseModel):
 class Description(BaseModel):
     text = ""
     syntax = "markdown"
+    html = ""
     name = ""
 
     def __init__(self, text, syntax=None, name=None):
         self.text = text
 
-        if syntax:
-            # todo - render syntax to HTML
-            self.syntax = syntax
+        if syntax is not None:
+            self.syntax = syntax.lower()
+
+        if self.syntax == "markdown":
+            self.html = markdown(text)
+        else:
+            try:
+                lexer = get_lexer_by_name(self.syntax)
+            except ClassNotFound:
+                # do nothing - if html is empty then description is a raw text
+                pass
+            else:
+                self.html = highlight(text, lexer, formater)
 
         if name:
             self.name = name

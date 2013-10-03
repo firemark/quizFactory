@@ -12,5 +12,15 @@
                 <true>Compile and run program</true>
             </answers>
         </q>
+        <q>
+            <desc syntax="C" name="main.c">test</desc>
+            <desc syntax="bash" name="plzrun.sh">test</desc>
+            <desc>test</desc>
+            <answers type="checkbox">
+                <false>Kernel Panic</false>
+                <false>Blue Screen</false>
+                <true>Compile and run program</true>
+            </answers>
+        </q>
     </questions>
 </quiz>

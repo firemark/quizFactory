@@ -12,5 +12,5 @@ setup(
     packages=find_packages(),
     license="MIT",
     test_suite="quizfactory.tests",
-    install_requires=['flask', 'pygments', 'lxml'],
+    install_requires=['flask', 'pygments', 'lxml', 'markdown'],
 )
