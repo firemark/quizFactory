@@ -6,6 +6,7 @@ from pygments import highlight
 from pygments.util import ClassNotFound
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+from quizfactory.utils import strip_indents
 
 formater = HtmlFormatter()
 
@@ -49,13 +50,13 @@ class Description(BaseModel):
     name = ""
 
     def __init__(self, text, syntax=None, name=None):
-        self.text = text
+        self.text = strip_indents(text)
 
         if syntax is not None:
             self.syntax = syntax.lower()
 
         if self.syntax == "markdown":
-            self.html = markdown(text)
+            self.html = markdown(self.text)
         else:
             try:
                 lexer = get_lexer_by_name(self.syntax)
@@ -63,7 +64,7 @@ class Description(BaseModel):
                 # do nothing - if html is empty then description is a raw text
                 pass
             else:
-                self.html = highlight(text, lexer, formater)
+                self.html = highlight(self.text, lexer, formater)
 
         if name:
             self.name = name

@@ -4,6 +4,7 @@ import os
 from lxml import etree
 
 from quizfactory import models
+from quizfactory.utils import strip_indents
 
 path = os.path.dirname(__file__)
 
@@ -67,14 +68,14 @@ class TestDescription(unittest.TestCase):
         from markdown import markdown
 
         text = """
-Super Title
-=====
-Super Description Text
+            Super Title
+            =====
+            Super Description Text
             """
-        mark = markdown(text)
+        mark = markdown(strip_indents(text))
 
-        self.assertEquals(models.Description(text).html, mark)
-        self.assertEquals(models.Description(text, "markdown").html, mark)
+        self.assertEqual(models.Description(text).html, mark)
+        self.assertEqual(models.Description(text, "markdown").html, mark)
 
     def test_syntax(self):
 
@@ -88,6 +89,6 @@ Super Description Text
             }
             """
 
-        html = highlight(c_code, CLexer(), HtmlFormatter())
+        html = highlight(strip_indents(c_code), CLexer(), HtmlFormatter())
 
-        self.assertEquals(models.Description(c_code, "c").html, html)
+        self.assertEqual(models.Description(c_code, "c").html, html)
