@@ -77,9 +77,7 @@ class Description(BaseModel):
         return cls(node.text, node.get("syntax"), node.get("name"))
 
     def __str__(self):
-        return "Description({}, syntax={}, name={}}".format(self.text[:20],
-                                                            self.syntax,
-                                                            self.name)
+        return self.html
 
 
 class Question(BaseModel):

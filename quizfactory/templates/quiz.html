@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Quiz - {{quiz.name}}
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Description</h4>
+  </div>
+  <div class="panel-body">
+    {{quiz.desc|safe}}
+  </div>
+</div>
+{% for q in quiz.questions %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Question</h4>
+    </div>
+    <div class="panel-body">
+        {% for desc in q.descs %}
+        <div class="panel panel-primary">
+            {% if desc.name %}
+            <div class="panel-heading">{{desc.name}}</div>
+            {% endif %}
+            <div class="panel-body">
+                {{desc|safe}}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Answers</div>
+            
+            <ul class="list-group">
+            {% for an in q.answers %}
+                <li class="list-group-item">
+                    <input type='radio' name='answer' value='id' /> {{an.text}}
+                </li>
+            {% endfor %}
+            </ul>
+        </div> 
+    </div> 
+
+</div>
+{% endfor %}
+{% endblock %}

@@ -24,8 +24,10 @@ def run(args):
     qpath = args.qpath
     files = listdir(qpath)
 
-    conf.quizzes = [Quiz.load_from_file(path.join(qpath, filename))
-                    for filename in files]
+    for i, filename in enumerate(files):
+        quiz = Quiz.load_from_file(path.join(qpath, filename))
+        quiz.id = i
+        conf.quizzes.append(quiz)
 
     print("Loading views...")
     for name in conf.urls.keys():
@@ -33,6 +35,8 @@ def run(args):
     print("Done.")
 
     app.debug = True
+    app.template_folder = path.join(BASEDIR, "templates")
+    app.static_folder = path.join(BASEDIR, "static")
     app.run()
 
 if __name__ == '__main__':

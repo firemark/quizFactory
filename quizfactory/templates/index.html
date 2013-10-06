@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Quiz - index site
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Filename</th>
+                <th>Questions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td><a href="{{url_for('get_quiz', quiz_id=quiz.id)}}">{{quiz.name}}</a></td>
+                <td>{{quiz.filename}}</td>
+                <td>{{quiz.questions|length}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

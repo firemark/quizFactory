@@ -10,7 +10,7 @@ class FiremarkFlask(Flask):
         """ add view using function name with url from config """
 
         def decorator(f):
-            endpoint = options.pop('endpoint', f.__name__),
+            endpoint = options.pop('endpoint', f.__name__)
             method, name = f.__name__.split('_', 1)
             options["methods"] = [method.upper()]
             self.add_url_rule(conf.urls[name], endpoint, f, **options)

@@ -1,12 +1,13 @@
 settings = None
 urls = {
     "index": "/",
-    "quiz": "/quiz/<quiz>/",
-    "question": "/quiz/<quiz>/question/<direction>/",
+    "quiz": "/quiz/<int:quiz_id>/",
+    "question": "/quiz/<int:quiz_id>/question/<direction>/",
 }
 quizzes = []
 
+
 def load_conf():
     global settings
-    #todo
+    # todo
     settings = __import__("settings")

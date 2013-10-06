@@ -1,6 +1,7 @@
-from quizfactory import app
+from quizfactory import app, conf
+from flask import render_template
 
 
 @app.fine_route()
 def get_index():
-    return 'Hello World!'
+    return render_template('index.html', quizzes=conf.quizzes)
