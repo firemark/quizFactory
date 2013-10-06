@@ -1,11 +1,53 @@
 from quizfactory import conf
-from random import shuffle
+from hashlib import sha1
+from random import shuffle, random
+
+
+class GameQuestion(object):
+    answers = None
+    question = None
+    choice = None
+
+    def __init__(self, q):
+        self.question = q
+        self.answers = {
+            sha1(str(random()) + a.text).hexdigest()[:8]: a
+            for a in q.answers
+        }
+
+        t = self.question.answers_type
+
+        if t == "radio":
+            self.choice = ""  # nothing selected
+        elif t == "checkbox":
+            self.choice = []  # list of selected answers
+        elif t == "text":
+            self.choice = ""  # text
+
+    def get_errors(self):
+        """Return list of errors (only key)"""
+        t = self.question.answers_type
+        choice = self.choice
+        items = self.answers.items
+
+        if t == "radio":
+            good_answers = [k for k, v in items() if v.is_correct]
+            return [self.choice] if choice in good_answers else []
+        elif t == "checkbox":
+            good_answers = {k for k, v in items() if v.is_correct}
+            return list(set(choice) & good_answers)
+        elif t == "text":
+            return [k for k, v in items() if v.is_correct and v.text == choice]
+
+        return []  # if is OK - send empty list
 
 
 class Game(object):
 
     quiz = None
     questions = None
+    answers = None
+    finish = False
 
     _pointer = 0
 
@@ -14,11 +56,12 @@ class Game(object):
     def __init__(self, key):
         self.quiz = conf.quizzes[key]
 
-        self.questions = self.quiz.questions[:]
+        self.questions = [GameQuestion(q) for q in self.quiz.questions]
         shuffle(self.questions)
+        self.answers = [{} for _ in range(len(self.questions))]
 
     @property
-    def now_question(self):
+    def get_question(self):
         return self.questions[self._pointer]
 
     def change_pointer(self, pointer):
@@ -34,7 +77,7 @@ class Game(object):
         except KeyError:
             return False
         else:
-            return change_pointer(pointer)
+            return self.change_pointer(pointer)
 
     @property
     def is_last(self):
@@ -47,4 +90,3 @@ class Game(object):
     @property
     def pointer(self):
         return self._pointer
-    
