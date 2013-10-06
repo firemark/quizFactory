@@ -4,12 +4,13 @@ from markdown import markdown
 
 from pygments import highlight
 from pygments.util import ClassNotFound
-from pygments.lexers import get_lexer_by_name
+from pygments.lexers import get_lexer_by_name, get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 
 from quizfactory.utils import strip_indents
 
 import os
+from cgi import escape
 
 formater = HtmlFormatter()
 
@@ -54,30 +55,41 @@ class Description(BaseModel):
 
     def __init__(self, text, syntax=None, name=None):
         self.text = strip_indents(text)
+        lexer = None
+
+        if name:
+            self.name = name
 
         if syntax is not None:
             self.syntax = syntax.lower()
+        elif self.name:
+            try:
+                lexer = get_lexer_for_filename(self.name)
+            except ClassNotFound:
+                pass
+            else:
+                self.syntax = lexer.aliases[0]
 
         if self.syntax == "markdown":
             self.html = markdown(self.text)
         else:
             try:
-                lexer = get_lexer_by_name(self.syntax)
+                lexer = lexer or get_lexer_by_name(self.syntax)
             except ClassNotFound:
                 # do nothing - if html is empty then description is a raw text
                 pass
             else:
                 self.html = highlight(self.text, lexer, formater)
 
-        if name:
-            self.name = name
-
     @classmethod
     def from_xml(cls, node):
         return cls(node.text, node.get("syntax"), node.get("name"))
 
+    def __repr__(self):
+        return "Description(%s, %s)" % (self.name, self.syntax)
+
     def __str__(self):
-        return self.html
+        return self.html or "<pre>%s</pre>" % escape(self.text)
 
 
 class Question(BaseModel):

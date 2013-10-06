@@ -88,10 +88,16 @@ class TestDescription(unittest.TestCase):
 
         c_code = """
             int main(int argc, char** argv){
-                printf(\"test\\n\"); 
+                printf(\"test\\n\");
             }
             """
 
         html = highlight(strip_indents(c_code), CLexer(), HtmlFormatter())
 
         self.assertEqual(models.Description(c_code, "c").html, html)
+
+    def test_filename(self):
+        Desc = models.Description
+        self.assertEqual(Desc("", name="f.c").syntax, "c")
+        self.assertEqual(Desc("", name="f.cpp").syntax, "cpp")
+        self.assertEqual(Desc("", name="f.py").syntax, "python")
