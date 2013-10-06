@@ -8,6 +8,7 @@ from pygments.lexers import get_lexer_by_name, get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 
 from quizfactory.utils import strip_indents
+from .answer_types import get_answer_type
 
 import os
 from cgi import escape
@@ -100,18 +101,19 @@ class Question(BaseModel):
 
     descs = None
     answers = None
-    answers_type = "radio"
+    answers_type = None
+
+    def __init__(self, answers_type=None):
+        answers_type = answers_type or "radio"
+        self.answers_type = get_answer_type(answers_type)
 
     @classmethod
     def from_xml(cls, node):
-        q = cls()
-
-        q.descs = [Description.from_xml(c) for c in node.iterfind("desc")]
 
         ans = node.find("answers")
-        answer_type = ans.get("type")
-        if answer_type:
-            q.answer_type = answer_type
+        q = cls(ans.get("type"))
+
+        q.descs = [Description.from_xml(c) for c in node.iterfind("desc")]
         q.answers = [Answer.from_xml(c) for c in ans.iterfind("true")]
         q.answers += [Answer.from_xml(c) for c in ans.iterfind("false")]
         # | operator in lxml's xpath doesn't work :/

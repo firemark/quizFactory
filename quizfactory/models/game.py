@@ -2,6 +2,8 @@ from quizfactory import conf
 from hashlib import sha1
 from random import shuffle, random
 
+__all__ = ["GameQuestion", "Game"]
+
 
 class GameQuestion(object):
     answers = None
@@ -10,43 +12,22 @@ class GameQuestion(object):
 
     def __init__(self, q):
         self.question = q
-        self.answers = {
+        self.answers = { #hash: answer
             sha1(str(random()) + a.text).hexdigest()[:8]: a
             for a in q.answers
         }
 
-        t = self.question.answers_type
-
-        if t == "radio":
-            self.choice = ""  # nothing selected
-        elif t == "checkbox":
-            self.choice = []  # list of selected answers
-        elif t == "text":
-            self.choice = ""  # text
+        self.choice = self.question.answers_type.set_choice()
 
     def get_errors(self):
-        """Return list of errors (only key)"""
-        t = self.question.answers_type
-        choice = self.choice
-        items = self.answers.items
-
-        if t == "radio":
-            good_answers = [k for k, v in items() if v.is_correct]
-            return [self.choice] if choice in good_answers else []
-        elif t == "checkbox":
-            good_answers = {k for k, v in items() if v.is_correct}
-            return list(set(choice) & good_answers)
-        elif t == "text":
-            return [k for k, v in items() if v.is_correct and v.text == choice]
-
-        return []  # if is OK - send empty list
+        """Return list of errors (only keys)"""
+        return self.question.answers_type.get_errors(self.choice, self.answers)
 
 
 class Game(object):
 
     quiz = None
     questions = None
-    answers = None
     finish = False
 
     _pointer = 0
@@ -58,7 +39,6 @@ class Game(object):
 
         self.questions = [GameQuestion(q) for q in self.quiz.questions]
         shuffle(self.questions)
-        self.answers = [{} for _ in range(len(self.questions))]
 
     @property
     def get_question(self):

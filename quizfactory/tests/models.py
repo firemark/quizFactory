@@ -61,7 +61,7 @@ class TestXML(unittest.TestCase):
 
         self.assertEqual(len(q.answers), 2)
         self.assertEqual(len(q.descs), 2)
-        self.assertEqual(q.answer_type, 'checkbox')
+        self.assertEqual(q.answers_type.name, 'checkbox')
 
 
 class TestDescription(unittest.TestCase):
