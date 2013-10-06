@@ -10,13 +10,9 @@
             </tr>
         </thead>
         <tbody>
-        {% for quiz in quizzes.values() %}
+        {% for key, quiz in quizzes.items() %}
             <tr>
-                <td>
-                    <a href="{{url_for('get_quiz', quiz_id=quiz.key)}}">
-                        {{quiz.name}}
-                    </a>
-                </td>
+                <td><a href="{{url_for('get_quiz', quiz_id=key)}}">{{quiz.name}}</a></td>
                 <td>{{quiz.filename}}</td>
                 <td>{{quiz.questions|length}}</td>
             </tr>

@@ -4,6 +4,8 @@
         <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
         <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
         <link href="http://igniteflow.com/static/css/pygments/github.css" rel="stylesheet" type="text/css"/>
+        {% block head %}
+        {% endblock %}
     </head>
     <body>
         <div id="wrap">
@@ -12,8 +14,10 @@
                   <h1>{{ self.title() }}</h1>
                 </div>
 
+                <div id="content">
                 {% block content %}
                 {% endblock %}
+                </div>
             </div>
 
         </div>    

@@ -31,7 +31,6 @@ def load_conf(args):
         m.update(qpath.encode('utf-8'))
         key = m.hexdigest()[:8]
 
-        quiz.key = key
         quizzes[key] = quiz
 
     print("Loading views...")
