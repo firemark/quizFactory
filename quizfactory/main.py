@@ -1,7 +1,5 @@
 from quizfactory import app, conf
-from quizfactory.models import Quiz
-
-from os import path, listdir
+from os import path
 import argparse
 
 BASEDIR = path.dirname(__file__)
@@ -20,19 +18,7 @@ def set_parser():
 
 def run(args):
 
-    print("Loading quizzes...")
-    qpath = args.qpath
-    files = listdir(qpath)
-
-    for i, filename in enumerate(files):
-        quiz = Quiz.load_from_file(path.join(qpath, filename))
-        quiz.id = i
-        conf.quizzes.append(quiz)
-
-    print("Loading views...")
-    for name in conf.urls.keys():
-        __import__("views.%s" % name)
-    print("Done.")
+    conf.load_conf(args)
 
     app.debug = True
     app.template_folder = path.join(BASEDIR, "templates")

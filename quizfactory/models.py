@@ -122,6 +122,7 @@ class Quiz(BaseModel):
     """Quiz Model"""
     filename = ""
     name = ""
+    key = ""
     desc = None
     questions = None
     config = None
