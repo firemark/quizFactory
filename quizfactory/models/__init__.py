@@ -1,2 +1,2 @@
-from quiz import *
-from game import Game
+from .quiz import *
+from .game import *
