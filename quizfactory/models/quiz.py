@@ -12,6 +12,8 @@ from quizfactory.utils import strip_indents
 import os
 from cgi import escape
 
+__all__ = ['Answer', 'Quiz', 'Description', 'Question', 'Quiz']
+
 formater = HtmlFormatter()
 
 
@@ -122,7 +124,6 @@ class Quiz(BaseModel):
     """Quiz Model"""
     filename = ""
     name = ""
-    key = ""
     desc = None
     questions = None
     config = None
