@@ -4,7 +4,7 @@ urls = {
     "quiz": "/quiz/<quiz>/",
     "question": "/quiz/<quiz>/question/<direction>/",
 }
-
+quizzes = []
 
 def load_conf():
     global settings

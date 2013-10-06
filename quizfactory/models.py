@@ -6,7 +6,10 @@ from pygments import highlight
 from pygments.util import ClassNotFound
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+
 from quizfactory.utils import strip_indents
+
+import os
 
 formater = HtmlFormatter()
 
@@ -107,6 +110,8 @@ class Question(BaseModel):
 class Quiz(BaseModel):
 
     """Quiz Model"""
+    filename = ""
+    name = ""
     desc = None
     questions = None
     config = None
@@ -118,6 +123,8 @@ class Quiz(BaseModel):
             tree = etree.parse(f)
 
         quiz = Quiz()
+        quiz.filename = os.path.split(filename)[-1]
+        quiz.name = tree.find("name").text
         quiz.desc = Description.from_xml(tree.find("desc"))
         quiz.questions = [Question.from_xml(c) for c in
                           tree.iterfind("questions/q")]

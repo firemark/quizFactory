@@ -19,6 +19,9 @@ class TestXML(unittest.TestCase):
         filename = get_path("quiz.xml")
         quiz = models.Quiz.load_from_file(filename)
 
+        self.assertEqual(quiz.name, "Example")
+        self.assertEqual(quiz.filename, "quiz.xml")
+
         self.assertIsInstance(quiz.desc, models.Description)
         self.assertEqual(len(quiz.questions), 2)
 
