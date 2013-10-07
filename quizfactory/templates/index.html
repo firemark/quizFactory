@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Filename</th>
-                <th>Questions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for key, quiz in quizzes.items() %}
-            <tr>
-                <td><a href="{{url_for('get_quiz', quiz_id=key)}}">{{quiz.name}}</a></td>
-                <td>{{quiz.filename}}</td>
-                <td>{{quiz.questions|length}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Filename</th>
+            <th>Questions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key, quiz in quizzes.items() %}
+        <tr>
+            <td><a href="{{url_for('get_quiz', quiz_id=key)}}">{{quiz.name}}</a></td>
+            <td>{{quiz.filename}}</td>
+            <td>{{quiz.questions|length}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

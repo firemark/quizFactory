@@ -23,6 +23,7 @@ def run(args):
     app.debug = True
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
+    app.config['SECRET_KEY'] = "Koszmar firemarka"
     app.run()
 
 if __name__ == '__main__':

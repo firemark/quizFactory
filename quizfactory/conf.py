@@ -1,5 +1,3 @@
-from quizfactory.models import Quiz
-
 from os import path, listdir
 from hashlib import sha1
 
@@ -7,13 +5,16 @@ from hashlib import sha1
 settings = None
 urls = {
     "index": "/",
-    "quiz": "/quiz/<quiz_id>/",
-    "question": "/quiz/<quiz_id>/question/<direction>/",
+    "quiz": "/quiz/<quiz_id>",
+    "question": "/quiz/<quiz_id>/question",
 }
 quizzes = {}  # hash: Quiz(...)
 
 
 def load_conf(args):
+
+    from quizfactory.models import Quiz
+
     global quizzes
     # todo
     #settings = __import__("settings")

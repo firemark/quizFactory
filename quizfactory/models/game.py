@@ -12,8 +12,9 @@ class GameQuestion(object):
 
     def __init__(self, q):
         self.question = q
-        self.answers = { #hash: answer
-            sha1(str(random()) + a.text).hexdigest()[:8]: a
+        random_str = str(random()).encode('utf-8')
+        self.answers = {  # hash: answer
+            sha1(random_str + a.text.encode('utf-8')).hexdigest()[:8]: a
             for a in q.answers
         }
 
@@ -22,6 +23,20 @@ class GameQuestion(object):
     def get_errors(self):
         """Return list of errors (only keys)"""
         return self.question.answers_type.get_errors(self.choice, self.answers)
+
+    def to_json(self):
+        q = self.question
+        choice = self.choice
+        resp = {
+            "descs": [desc.to_json() for desc in q.descs],
+            "choice": self.choice,
+            "answers_type": q.answers_type.name
+        }
+
+        if q.answers_type.allow:
+            resp["answers"] = {v: k.text for v, k in self.answers.items()}
+
+        return resp
 
 
 class Game(object):
@@ -40,8 +55,7 @@ class Game(object):
         self.questions = [GameQuestion(q) for q in self.quiz.questions]
         shuffle(self.questions)
 
-    @property
-    def get_question(self):
+    def get_game_question(self):
         return self.questions[self._pointer]
 
     def change_pointer(self, pointer):

@@ -1,0 +1,27 @@
+{% raw %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">Question</h4>
+    </div>
+    <div class="panel-body">
+        <% _.each(descs,function(desc,key,list){ %>
+        <div class="panel panel-primary">
+            <% if(desc.name){ %>
+                <div class="panel-heading"><%-desc.name%></div>
+            <% } %>
+            <div class="panel-body"><%=desc.html%></div>
+        </div>
+        <% }); %>
+        <div class="panel panel-default">
+            <div class="panel-heading">Answers</div>
+            <%= AnsTypeViews[answers_type].render(answers, choice) %>
+
+        </div> 
+    </div>
+    <div class="panel-footer">
+        <button id='next' class='btn btn-default'>prev</button>
+        <button id='prev' class='btn btn-default'>next</button>
+        <button id='finish' class='btn btn-primary'>finish</button>
+    </div>
+</div>
+{% endraw %}

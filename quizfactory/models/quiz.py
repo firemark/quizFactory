@@ -88,6 +88,13 @@ class Description(BaseModel):
     def from_xml(cls, node):
         return cls(node.text, node.get("syntax"), node.get("name"))
 
+    def to_json(self):
+        return {
+            "syntax": self.syntax,
+            "html": str(self),
+            "name": self.name
+        }
+
     def __repr__(self):
         return "Description(%s, %s)" % (self.name, self.syntax)
 

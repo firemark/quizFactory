@@ -4,6 +4,12 @@
 {{quiz.name}}
 {% endblock %}
 
+{% block head %}
+<script src="{{url_for('static', filename='js/underscore-min.js')}}"></script>
+<script src="{{url_for('static', filename='js/backbone-min.js')}}"></script>
+<script src="{{url_for('static', filename='js/answer_types.js')}}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -12,36 +18,65 @@
   <div class="panel-body">
     {{quiz.desc|safe}}
   </div>
+  
 </div>
-{% for q in quiz.questions %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">Question</h4>
-    </div>
-    <div class="panel-body">
-        {% for desc in q.descs %}
-        <div class="panel panel-primary">
-            {% if desc.name %}
-            <div class="panel-heading">{{desc.name}}</div>
-            {% endif %}
-            <div class="panel-body">
-                {{desc|safe}}
-            </div>
-        </div>
-        {% endfor %}
-        <div class="panel panel-default">
-            <div class="panel-heading">Answers</div>
-            
-            <ul class="list-group">
-            {% for an in q.answers %}
-                <li class="list-group-item">
-                    <input type='radio' name='answer' value='id' /> {{an.text}}
-                </li>
-            {% endfor %}
-            </ul>
-        </div> 
-    </div> 
 
-</div>
-{% endfor %}
+<button id='start' class='btn btn-primary btn-lg'>Start the Quiz</button>
+
+<script type="text/html" id='questionTemplate'>
+    {% include "js_quiz.html" %}
+</script>
+
+<script>
+$(function(){
+    var Question = Backbone.Model.extend({
+        url: function(){
+            return "{{url_for('get_question', quiz_id=quiz_id)}}";
+        },
+        isNew: function(){
+            return this.ready == undefined;
+        },
+        defaults: {
+            descs: [],
+            answers: {},
+            answers_type: "radio",
+            direction: null,
+            ready: true
+        }
+    });
+
+    var QuestionView = Backbone.View.extend({
+        content: $('#content'),
+        template: _.template($('#questionTemplate').html()),
+        question: null,
+        events: {
+          'click button#prev': 'prev',
+          'click button#finish': 'finish',
+          'click button#prev': 'next',
+        },
+        initialize: function(){
+           _.bindAll(this, 'render', "next");
+           this.question = new Question();
+           this.question.fetch({
+              success: this.render
+           });
+           
+        },
+        render: function(){
+            console.log(this.question.attributes);
+            var rendered = this.template(this.question.attributes);
+            $(this.content).html(rendered);
+        },
+        next: function(){
+          alert('next')
+        }
+    });
+
+    var questionView = null;
+
+    $('#start').click(function(){
+        questionView = new QuestionView();
+    });
+});
+</script>
 {% endblock %}
