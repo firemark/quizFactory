@@ -29,54 +29,55 @@
 
 <script>
 $(function(){
-    var Question = Backbone.Model.extend({
-        url: function(){
-            return "{{url_for('get_question', quiz_id=quiz_id)}}";
-        },
+    var Game = Backbone.Model.extend({
+        url: "{{url_for('get_game', quiz_id=quiz_id)}}",
         isNew: function(){
-            return this.ready == undefined;
+            return this.get("pointer") == undefined;
         },
         defaults: {
             descs: [],
             answers: {},
             answers_type: "radio",
-            direction: null,
-            ready: true
         }
     });
 
-    var QuestionView = Backbone.View.extend({
-        content: $('#content'),
+    var GameView = Backbone.View.extend({
+        el: $('#content'),
         template: _.template($('#questionTemplate').html()),
-        question: null,
+        game: null,
         events: {
           'click button#prev': 'prev',
           'click button#finish': 'finish',
-          'click button#prev': 'next',
+          'click button#next': 'next',
+          'click button#start': 'start',
         },
         initialize: function(){
-           _.bindAll(this, 'render', "next");
-           this.question = new Question();
-           this.question.fetch({
-              success: this.render
-           });
-           
+           _.bindAll(this, 'render', "next", "prev", "start", "update_game");
+           this.game = new Game();
+           this.game.fetch({success: this.render});
         },
         render: function(){
-            console.log(this.question.attributes);
-            var rendered = this.template(this.question.attributes);
-            $(this.content).html(rendered);
+          var rendered = this.template(this.game.attributes);
+          $(this.el).html(rendered);
         },
         next: function(){
-          alert('next')
+          this.update_game({pointer: this.game.get("pointer") + 1});
+        },
+        prev: function(){
+          this.update_game({pointer: this.game.get("pointer") - 1});
+        },
+        start: function(){
+          this.update_game();
+        },
+        update_game: function(attr){
+          this.game.save(attr || {}, {
+            success: this.render
+          });
         }
     });
 
-    var questionView = null;
+    var gameView = new GameView();
 
-    $('#start').click(function(){
-        questionView = new QuestionView();
-    });
 });
 </script>
 {% endblock %}
