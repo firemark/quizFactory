@@ -43,7 +43,7 @@ def put_game(quiz_id):
         return jsonify(error="quiz not found"), 404
 
     data = request.json
-    print(data)
+
     choice = data.get("choice")
     pointer = data.get("pointer")
 
