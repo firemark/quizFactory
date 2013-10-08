@@ -47,5 +47,13 @@
                 <true>Compile and run program</true>
             </answers>
         </q>
+        <q>
+            <desc syntax="c">true;main(){while(true=1);}</desc>
+            <desc>This code is compilable?</desc>
+            <answers type="radio">
+                <true>Yes</true>
+                <false>No</false>
+            </answers>
+        </q>
     </questions>
 </quiz>
