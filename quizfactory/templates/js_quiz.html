@@ -1,7 +1,7 @@
 {% raw %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4 class="panel-title">Question</h4>
+        <h4 class="panel-title">Question <strong>#<%-pointer+1%></strong></h4>
     </div>
     <div class="panel-body">
         <% _.each(descs,function(desc,key,list){ %>
@@ -19,15 +19,19 @@
     </div>
     <div class="panel-footer text-center">
         <div class="btn-group">
+        <% if(pointer < len_questions){ %>
             <button id='prev' class='btn btn-default'>prev</button>
-            <% for(var i=0; i < len_questions; i++){ %>
+        <% } %>
+        <% for(var i=0; i < len_questions; i++){ %>
             <button
                 class='btn btn-default btn-question <%-i==pointer?"btn-info":""%>'
                 data-number="<%-i%>">
                 <%-i+1%>
             </button>
-            <% } %>
+        <% } %>
+        <% if(pointer < len_questions){ %>
             <button id='next' class='btn btn-default'>next</button>
+        <% } %>
         </div>
         
         <button id='finish' class='btn btn-primary'>finish</button>

@@ -21,12 +21,12 @@ var AnsTypeView = Backbone.View.extend({
 var AnsTypeViews = {
     radio: new AnsTypeView({
         template: "<li class='list-group-item'>\
-        <input type='radio' name='<%=hash%>' /> <%-text%>\
+        <input type='radio' <%-choice==hash?'checked':''%> value='<%=hash%>' /> <%-text%>\
         </li>"
     }),
     checkbox: new AnsTypeView({
         template: "<li class='list-group-item'>\
-        <input type='checkbox' name='<%=hash%>' /> <%-text%>\
+        <input type='checkbox' <%-choice==hash?'checked':''%> name='<%=hash%>' /> <%-text%>\
         </li>"
     })
 };
