@@ -6,7 +6,7 @@ settings = None
 urls = {
     "index": "/",
     "quiz": "/quiz/<quiz_id>",
-    "question": "/quiz/<quiz_id>/question",
+    "game": "/quiz/<quiz_id>/game",
 }
 quizzes = {}  # hash: Quiz(...)
 

@@ -44,43 +44,36 @@ class Game(object):
     quiz = None
     questions = None
     finish = False
+    len_questions = 0
 
     _pointer = 0
-
-    DIRECTIONS = {"prev": -1, "next": 1}
 
     def __init__(self, key):
         self.quiz = conf.quizzes[key]
 
         self.questions = [GameQuestion(q) for q in self.quiz.questions]
+        self.len_questions = len(self.questions)
         shuffle(self.questions)
 
     def get_game_question(self):
         return self.questions[self._pointer]
 
     def change_pointer(self, pointer):
-        if pointer in range(len(self.questions)):
+        if pointer in range(self.len_questions):
             self._pointer = pointer
             return True
         else:
             return False
 
-    def move(self, direction):
-        try:
-            pointer = self._pointer + self.DIRECTIONS[direction]
-        except KeyError:
-            return False
-        else:
-            return self.change_pointer(pointer)
-
-    @property
-    def is_last(self):
-        return self._pointer < len(self.questions)
-
-    @property
-    def is_first(self):
-        return self._pointer >= 0
-
     @property
     def pointer(self):
         return self._pointer
+
+    def to_json(self):
+        json = self.get_game_question().to_json()
+        json.update({
+            "pointer": self._pointer,
+            "len_questions": self.len_questions
+        })
+
+        return json
