@@ -15,12 +15,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">Answers</div>
             <%= AnsTypeViews[answers_type].render(answers, choice) %>
-
         </div> 
     </div>
-    <div class="panel-footer">
-        <button id='next' class='btn btn-default'>prev</button>
-        <button id='prev' class='btn btn-default'>next</button>
+    <div class="panel-footer text-center">
+        <div class="btn-group">
+            <button id='prev' class='btn btn-default'>prev</button>
+            <% for(var i=0; i < len_questions; i++){ %>
+            <button
+                class='btn btn-default btn-question <%-i==pointer?"btn-info":""%>'
+                data-number="<%-i%>">
+                <%-i+1%>
+            </button>
+            <% } %>
+            <button id='next' class='btn btn-default'>next</button>
+        </div>
+        
         <button id='finish' class='btn btn-primary'>finish</button>
     </div>
 </div>
