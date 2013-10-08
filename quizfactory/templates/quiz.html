@@ -50,9 +50,12 @@ $(function(){
           'click button#finish': 'finish',
           'click button#next': 'next',
           'click button#start': 'start',
+          'click button.btn-question': 'set_question',
+          'click input': 'set_choice'
         },
         initialize: function(){
-           _.bindAll(this, 'render', "next", "prev", "start", "update_game");
+           _.bindAll(this, 'render', "next", "prev", "start",
+                     "update_game", "set_question", "set_choice");
            this.game = new Game();
            this.game.fetch({success: this.render});
         },
@@ -69,9 +72,18 @@ $(function(){
         start: function(){
           this.update_game();
         },
+        set_question: function(e){
+          var i = parseInt($(e.target).data("number"));
+          this.update_game({pointer: i});
+        },
+        set_choice: function(e){
+          var value = e.target.value;
+          this.update_game({choice: value});
+        },
         update_game: function(attr){
           this.game.save(attr || {}, {
-            success: this.render
+            success: this.render,
+            error: function(){alert(":(");}
           });
         }
     });
