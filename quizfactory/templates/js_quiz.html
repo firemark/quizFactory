@@ -22,12 +22,29 @@
         <% if(pointer < len_questions){ %>
             <button id='prev' class='btn btn-default'>prev</button>
         <% } %>
-        <% for(var i=0; i < len_questions; i++){ %>
-            <button
-                class='btn btn-default btn-question <%-i==pointer?"btn-info":""%>'
-                data-number="<%-i%>">
-                <%-i+1%>
-            </button>
+        <% if(!end){ %>
+            <% for(var i=0; i < len_questions; i++){ %>
+                <button
+                    class='btn btn-default btn-question
+                    <%-i==pointer? "btn-primary": ""%>'
+                    <%-i==pointer? "disabled": ""%>
+                    data-number="<%-i%>">
+                    <%-i+1%>
+                </button>
+            <% } %>
+        <% }else{ %>
+            <% for(var i=0; i < len_questions; i++){ %>
+                <button
+                    data-number="<%-i%>"
+                    class='btn
+                    btn-default
+                    btn-<%-good_question[i]? "success": "danger"%>
+                    btn-question'
+                    <%-i==pointer? "disabled": ""%>
+                    >
+                    <%-i+1%>
+                </button>
+            <% } %>
         <% } %>
         <% if(pointer < len_questions){ %>
             <button id='next' class='btn btn-default'>next</button>

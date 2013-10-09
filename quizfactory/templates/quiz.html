@@ -76,6 +76,10 @@ $(function(){
           var i = parseInt($(e.target).data("number"));
           this.update_game({pointer: i});
         },
+        finish: function(){
+          this.update_game({finish: true});
+          this.game.unset('finish');
+        },
         set_choice: function(e){
           var value = e.target.value;
           this.update_game({choice: value});
@@ -85,6 +89,7 @@ $(function(){
             success: this.render,
             error: function(){alert(":(");}
           });
+
         }
     });
 

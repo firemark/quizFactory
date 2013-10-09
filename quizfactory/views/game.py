@@ -47,11 +47,14 @@ def put_game(quiz_id):
     choice = data.get("choice")
     pointer = data.get("pointer")
 
-    if pointer is not None:
-        game.change_pointer(pointer)
+    if data.get("finish"):
+        game.finish()
+    else:
+        if choice is not None:
+            game.get_game_question().choice = choice
 
-    if choice is not None:
-        game.get_game_question().choice = choice
+        if pointer is not None:
+            game.change_pointer(pointer)
 
     return jsonify(**game.to_json())
 

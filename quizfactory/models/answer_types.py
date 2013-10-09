@@ -17,20 +17,18 @@ def register(cls):
     global types
     name = cls.__name__.split("Type")[0].lower()
 
-    if name != 'abstract':
-        cls.name = name
-        types[name] = cls
+    cls.name = name
+    types[name] = cls
 
     return cls
 
 
-@register
 class AbstractType(object):
 
     allow = True
 
     @staticmethod
-    def get_good_answers(cls, answers):
+    def get_good_answers(answers):
         return [k for k, v in answers.items() if v.is_correct]
 
     @classmethod
