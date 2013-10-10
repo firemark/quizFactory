@@ -1,5 +1,5 @@
 {% raw %}
-<div class="panel panel-default">
+<div class="panel panel-default <% if(end){ %>panel-<%-good_question[pointer]? "success": "danger"%><% } %>">
     <div class="panel-heading">
         <h4 class="panel-title">Question <strong>#<%-pointer+1%></strong></h4>
     </div>
@@ -14,7 +14,7 @@
         <% }); %>
         <div class="panel panel-default">
             <div class="panel-heading">Answers</div>
-            <%= AnsTypeViews[answers_type].render(answers, choice) %>
+            <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
         </div> 
     </div>
     <div class="panel-footer text-center">
@@ -50,8 +50,11 @@
             <button id='next' class='btn btn-default'>next</button>
         <% } %>
         </div>
-        
-        <button id='finish' class='btn btn-primary'>finish</button>
+        <% if(!end){ %>
+            <button id='finish' class='btn btn-primary'>finish</button>
+        <% }else{ %>
+            <button id='end-game' class='btn btn-primary'>end</button>
+        <% } %>
     </div>
 </div>
 {% endraw %}

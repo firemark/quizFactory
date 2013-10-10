@@ -1,14 +1,16 @@
 var AnsTypeView = Backbone.View.extend({
     initialize: function(args){
         _.bindAll(this, 'render');
-        this.template = _.template(args.template);
+        this.template_begin = _.template(args.template_begin);
+        this.template_finish = _.template(args.template_finish);
     },
-    render: function(answers, choice){
-        var template = this.template;
+    render: function(answers, choice, end){
+        var template = end?this.template_finish:this.template_begin;
         var str = '<ul class="list-group">';
-        _.each(answers, function(text, hash, list){
+        _.each(answers, function(obj, hash, list){
             str += template({
-                text: text,
+                text: obj.text,
+                is_correct: obj.is_correct,
                 hash: hash,
                 choice: choice
             });
@@ -20,13 +22,22 @@ var AnsTypeView = Backbone.View.extend({
 
 var AnsTypeViews = {
     radio: new AnsTypeView({
-        template: "<li class='list-group-item'>\
+        template_finish: "<li class='list-group-item'>\
+        <input type='radio' <%-choice==hash?'checked':''%> value='<%=hash%>' /> <%-text%>\
+        <% if(is_correct){ %>\
+            <span class='label label-default label-success'>OK</span>\
+        <% }else if(choice==hash){ %>\
+             <span class='label label-default label-danger'>WRONG</span>\
+        <% } %>\
+        </li>",
+        template_begin: "<li class='list-group-item <%-choice==hash?'active':''%>'>\
         <input type='radio' <%-choice==hash?'checked':''%> value='<%=hash%>' /> <%-text%>\
         </li>"
     }),
     checkbox: new AnsTypeView({
-        template: "<li class='list-group-item'>\
+        template_begin: "<li class='list-group-item <%-choice==hash?'active':''%>'>\
         <input type='checkbox' <%-choice==hash?'checked':''%> name='<%=hash%>' /> <%-text%>\
-        </li>"
+        </li>",
+        template_finish: ""
     })
 };

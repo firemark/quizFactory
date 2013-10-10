@@ -50,7 +50,7 @@ def put_game(quiz_id):
     if data.get("finish"):
         game.finish()
     else:
-        if choice is not None:
+        if choice is not None and not game.end:
             game.get_game_question().choice = choice
 
         if pointer is not None:
