@@ -61,7 +61,7 @@ class CheckboxType(AbstractType):
     @classmethod
     def get_errors(cls, choice, answers):
         good_answers = cls.get_good_answers(answers)
-        return list(set(choice) & set(good_answers))
+        return list(set(choice) - set(good_answers))
 
     @staticmethod
     def set_choice():

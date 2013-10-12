@@ -74,7 +74,7 @@ class Game(object):
 
     def finish(self):
         self.end = True
-        self.good_question = [not q.get_errors() for q in self.questions]
+        self.good_question = [not bool(q.get_errors()) for q in self.questions]
 
     @property
     def pointer(self):
