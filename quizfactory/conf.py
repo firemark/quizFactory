@@ -36,5 +36,5 @@ def load_conf(args):
 
     print("Loading views...")
     for name in urls.keys():
-        __import__("views.%s" % name)
+        __import__("quizfactory.views.%s" % name)
     print("Done.")

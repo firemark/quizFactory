@@ -24,7 +24,7 @@ def run(args):
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
     app.config['SECRET_KEY'] = "Koszmar firemarka"
-    app.run()
+    app.run('0.0.0.0', 8000)
 
 if __name__ == '__main__':
     parser = set_parser()
