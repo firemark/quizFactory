@@ -41,7 +41,7 @@
                 ./main.o
             ]]></desc>
             <desc>What happen when I run **./plzrun.sh**?</desc>
-            <answers type="radio"><!-- radio, checkbox, text -->
+            <answers type="checkbox"><!-- radio, checkbox, text -->
                 <false>Kernel Panic</false>
                 <false>Blue Screen</false>
                 <true>Compile and run program</true>

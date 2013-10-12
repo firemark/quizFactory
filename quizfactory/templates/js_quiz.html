@@ -1,4 +1,3 @@
-{% raw %}
 <div class="panel panel-default <% if(end){ %>panel-<%-good_question[pointer]? "success": "danger"%><% } %>">
     <div class="panel-heading">
         <h4 class="panel-title">Question <strong>#<%-pointer+1%></strong></h4>
@@ -14,7 +13,9 @@
         <% }); %>
         <div class="panel panel-default">
             <div class="panel-heading">Answers</div>
-            <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
+            <form onsubmit='return 0;'> <!--  -->
+                <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
+            </form>
         </div> 
     </div>
     <div class="panel-footer text-center">
@@ -57,4 +58,3 @@
         <% } %>
     </div>
 </div>
-{% endraw %}

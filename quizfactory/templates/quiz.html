@@ -18,7 +18,18 @@
   <div class="panel-body">
     {{quiz.desc|safe}}
   </div>
-  
+</div>
+
+<div class="modal fade" id="ErrorModal" tabindex="-1" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Error</h4>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </div>
 </div>
 
 <button id='start' class='btn btn-primary btn-lg'>Start the Quiz</button>
@@ -51,7 +62,7 @@ $(function(){
           'click button#next': 'next',
           'click button#start': 'start',
           'click button.btn-question': 'set_question',
-          'click input': 'set_choice'
+          'change form': 'set_choice'
         },
         initialize: function(){
            _.bindAll(this, 'render', "next", "prev", "start",
@@ -80,16 +91,25 @@ $(function(){
           this.update_game({finish: true});
           this.game.unset('finish');
         },
-        set_choice: function(e){
-          var value = e.target.value;
-          this.update_game({choice: value});
+        set_choice: function(){
+          var answers_type = this.game.get('answers_type');
+          var generate_choice = AnsTypeViews[answers_type].generate_choice;
+          var choice = generate_choice($(this.el).find('form'));
+          this.update_game({choice: choice});
+        },
+        show_error: function(obj, a){
+           var modal = $("#ErrorModal");
+           var json = a.responseJSON;
+           var txt = json?json.error:'Undefined error(' + a.status + ')';
+           modal.find(".modal-body").text(txt);
+           modal.modal('show'); //WHY ?
+           $("#ErrorModal").modal('show');
         },
         update_game: function(attr){
           this.game.save(attr || {}, {
             success: this.render,
-            error: function(){alert(":(");}
+            error: this.show_error
           });
-
         }
     });
 
