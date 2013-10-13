@@ -55,12 +55,13 @@ class Game(object):
 
     _pointer = 0
 
-    def __init__(self, key):
+    def __init__(self, key, randoms=True):
         self.quiz = conf.quizzes[key]
 
         self.questions = [GameQuestion(q) for q in self.quiz.questions]
         self.len_questions = len(self.questions)
-        shuffle(self.questions)
+        if randoms:
+            shuffle(self.questions)
 
     def get_game_question(self):
         return self.questions[self._pointer]
@@ -79,6 +80,11 @@ class Game(object):
     @property
     def pointer(self):
         return self._pointer
+
+    @classmethod
+    def unserialize(cls, json):
+        game = cls(json.question_key, False)
+
 
     def to_json(self):
         json = self.get_game_question().to_json(self.end)
