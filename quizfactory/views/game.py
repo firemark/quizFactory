@@ -31,7 +31,6 @@ def post_game(quiz_id):
         games[id_game] = game
         session[quiz_id] = id_game
 
-
     return jsonify(**game.to_json())
 
 
@@ -49,12 +48,16 @@ def put_game(quiz_id):
 
     if data.get("finish"):
         game.finish()
-    else:
-        if choice is not None and not game.end:
-            game.get_game_question().choice = choice
-
-        if pointer is not None:
-            game.change_pointer(pointer)
+    elif pointer is not None and pointer != game.pointer:
+        game.change_pointer(pointer)
+    elif choice is not None and not game.end:
+        gq = game.get_game_question()
+        if gq.question.answers_type.is_valid(choice):
+            gq.choice = choice
+        else:
+            return jsonify(
+                error="choice object is not a valid object to this answer"
+            ), 403
 
     return jsonify(**game.to_json())
 
