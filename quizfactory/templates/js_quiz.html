@@ -11,12 +11,9 @@
             <div class="panel-body"><%=desc.html%></div>
         </div>
         <% }); %>
-        <div class="panel panel-default">
-            <div class="panel-heading">Answers</div>
-            <form onsubmit='return 0;'> <!--  -->
-                <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
-            </form>
-        </div> 
+        <form onsubmit='return 0;'> <!-- opera :( -->
+            <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
+        </form>
     </div>
     <div class="panel-footer text-center">
         <div class="btn-group">
