@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="ErrorModal" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="true">
+<div class="modal fade in " id="ErrorModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -38,6 +38,7 @@
 </div>
 
 <button id='start' class='btn btn-primary btn-lg'>Start the Quiz</button>
+<a href="{{url_for('get_index')}}" class='btn btn-primary'>Return to list of quizzes</a>
 
 <script type="text/html" id='questionTemplate'>
     {% include "js_quiz.html" %}
@@ -122,7 +123,7 @@ $(function(){
         }
     });
 
-    var gameView = new GameView();
+    gameView = new GameView();
 
 });
 </script>
