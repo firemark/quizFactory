@@ -126,8 +126,11 @@ $(function(){
            modal.modal('show');
         },
         end_game: function(){
-          this.game.destroy();
-          window.location = window.location; //redirect. Yep, i'm lazy :)
+          this.game.destroy({ success: function(){
+              window.location = window.location; //redirect. Yep, i'm lazy :)
+            } 
+          });
+          
         },
         update_game: function(attr){
           this.game.save(attr || {}, {
