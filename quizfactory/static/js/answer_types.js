@@ -82,7 +82,7 @@ var AnsTypeViews = {
             }else{
                 var is_correct = false;
                 var good_answers = [];
-                var trim_choice = choice.trim()
+                var trim_choice = choice.trim();
                 _.each(answers, function(obj, hash, list){
                     if (obj.is_correct){
                         var txt = obj.text.trim();
