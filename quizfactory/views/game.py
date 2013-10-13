@@ -61,4 +61,10 @@ def put_game(quiz_id):
 
 @app.fine_route()
 def delete_game(quiz_id):
-    pass
+    global games
+    try:
+        del games[session[quiz_id]]
+    except KeyError:
+        return jsonify(error="quiz not found"), 404
+
+    return jsonify(), 200

@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="ErrorModal" tabindex="-1" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="true">
+<div class="modal fade" id="ErrorModal" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -57,11 +57,12 @@ $(function(){
         template: _.template($('#questionTemplate').html()),
         game: null,
         events: {
-          'click button#prev': 'prev',
-          'click button#finish': 'finish',
-          'click button#next': 'next',
-          'click button#start': 'start',
-          'click button.btn-question': 'set_question',
+          'click #prev': 'prev',
+          'click #finish': 'finish',
+          'click #next': 'next',
+          'click #start': 'start',
+          'click .btn-question': 'set_question',
+          'click #end-game': 'end_game',
           'change form': 'set_choice'
         },
         initialize: function(){
@@ -102,8 +103,11 @@ $(function(){
            var json = a.responseJSON;
            var txt = json?json.error:'Undefined error(' + a.status + ')';
            modal.find(".modal-body").text(txt);
-           modal.modal('show'); //WHY ?
-           $("#ErrorModal").modal('show');
+           modal.modal('show');
+        },
+        end_game: function(){
+          this.game.destroy();
+          window.location = window.location; //redirect. Yep, i'm lazy :)
         },
         update_game: function(attr){
           this.game.save(attr || {}, {
