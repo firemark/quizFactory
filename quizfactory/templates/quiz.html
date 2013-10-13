@@ -15,17 +15,8 @@
 </style>
 {% endblock %}
 
-{% block content %}
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4 class="panel-title">Description</h4>
-  </div>
-  <div class="panel-body">
-    {{quiz.desc|safe}}
-  </div>
-</div>
-
-<div class="modal fade in " id="ErrorModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+{% block modals %}
+<div class="modal fade in " id="ErrorModal" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -35,6 +26,17 @@
         <div class="modal-body"></div>
       </div>
     </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Description</h4>
+  </div>
+  <div class="panel-body">
+    {{quiz.desc|safe}}
+  </div>
 </div>
 
 <button id='start' class='btn btn-primary btn-lg'>Start the Quiz</button>
