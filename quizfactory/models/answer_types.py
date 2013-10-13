@@ -1,4 +1,7 @@
-
+try:
+    str_type = basestring
+except NameError:
+    str_type = str
 
 __all__ = ["get_answer_type", "get_all_answer_types"]
 
@@ -39,7 +42,7 @@ class AbstractType(object):
     @classmethod
     def is_valid(cls, input):
         """parse input from request"""
-        return isinstance(input, str) and len(input) == 8
+        return isinstance(input, str_type) and len(input) == 8
 
     @staticmethod
     def set_choice():
@@ -93,4 +96,4 @@ class TextType(AbstractType):
 
     @classmethod
     def is_valid(cls, input):
-        return isinstance(input, str)
+        return isinstance(input, str_type)
