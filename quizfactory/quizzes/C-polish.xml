@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+    <name>C (Polski)</name>
+    <desc>
+        #Opis
+        Quiz ma za zadanie sprawdzić wiedzę o *C*
+        ##Uwagi
+        * zakładamy że standardowe biblioteki są już dołączone w kodzie
+        ##Potrzebna wiedza
+        * podstawy składni
+        * wskaźniki
+        * podstawowe typy
+        * wielkości typów (dla x86)
+        * preprocesor
+        * makra
+        * pliki nagłówkowe
+        * podstawy biblioteki standardowej (string.h, stdio.h)
+        * znajomości ASCII
+    </desc>
+    <questions>
+        <q>
+            <desc syntax="C">
+                char x = 'a';
+                T y = *(&amp;x);
+            </desc>
+            <desc>Jaki typ powinnina mieć zmienna y?</desc>
+            <answers type='radio'>
+                <true>char</true>
+                <false>*char</false>
+                <false>**char</false>
+                <false>***char</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char x = 'a';
+                T y = &amp;x;
+            </desc>
+            <desc>Jaki typ powinnina mieć zmienna y?</desc>
+            <answers type='radio'>
+                <false>char</false>
+                <true>*char</true>
+                <false>**char</false>
+                <false>***char</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char x = 'a';
+                T y = &amp;(&amp;(&amp;x));
+            </desc>
+            <desc>Jaki typ powinnina zmienna y?</desc>
+            <answers type='radio'>
+                <false>char</false>
+                <false>*char</false>
+                <false>**char</false>
+                <true>***char</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                unsigned char i = 0;
+                while(++i){
+                    printf("test\n");
+                }
+            </desc>
+            <desc>Ile razy wyświetli się napis *test*?</desc>
+            <answers type='text'>
+                <true>255</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char i = 0;
+                if(i++){
+                    printf("test\n");
+                }
+            </desc>
+            <desc>Ile razy wyświetli się napis *test*?</desc>
+            <answers type='radio'>
+                <true>0</true>
+                <false>1</false>
+                <false>255</false>
+            </answers>            
+        </q>
+        <q>
+            <desc syntax="C">
+                int a = 1;
+                int b = a++ + a++;
+            </desc>
+            <desc>Ile wynosi a oraz b?</desc>
+            <answers type='checkbox'>
+                <true>a=3</true>
+                <true>b=3</true>
+                <false>a=1</false>
+                <false>b=2</false>
+            </answers>            
+        </q>
+        <q>
+            <desc syntax="C">
+                int a = 1;
+                int b = ++a * ++a;
+            </desc>
+            <desc>Ile wynosi b?</desc>
+            <answers type='radio'>
+                <true>9</true>
+                <false>6</false>
+                <false>2</false>
+                <false>5</false>
+            </answers>            
+        </q>
+        <q>
+            <desc syntax="C">
+                #define makro(x) x * x;
+                int a = makro(2 + 1);
+            </desc>
+            <desc>Ile wynosi a?</desc>
+            <answers type='radio'>
+                <false>9</false>
+                <false>3.14</false>
+                <true>5</true>
+            </answers>            
+        </q>
+        <q>
+            <desc syntax="C">
+                char str[] = "aaa";
+            </desc>
+            <desc>Jakiej długości jest tablica str?</desc>
+            <answers type='text'>
+                <true>4</true>
+                <true>cztery</true>
+            </answers>          
+        </q>
+        <q>
+            <desc syntax="C">
+                double* a, b, **c;
+            </desc>
+            <desc>Jakiego typu są zmienne?</desc>
+            <answers type='checkbox'>
+                <true>a -> double*</true>
+                <true>b -> double</true>
+                <true>c -> double**</true>
+                <false>b -> double*</false>
+            </answers>          
+        </q>
+        <q>
+            <desc syntax="C">
+                char str[] = "---";
+                char i;
+                for(i=0; i&lt;3; i++)
+                    str[i] = 'A' + i;
+                printf(str);
+            </desc>
+            <desc>Co wyświetli się na ekranie?</desc>
+            <answers type='text'>
+                <true>ABC</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char str[] = "ABCD";
+                char* ptr = str-1;
+                while(*(++ptr))
+                    *ptr = *ptr + ('a' - 'A');
+                printf(str);
+            </desc>
+            <desc>Co wyświetli się na ekranie?</desc>
+            <answers type='text'>
+                <true>abcd</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                int func(){
+                    return 0;
+                }
+            </desc>
+            <desc>Ile argumentów przyjmuje funkcja func?</desc>
+            <answers type='radio'>
+                <true>nieskończenie wiele</true>
+                <false>1</false>
+                <false>0</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char* str1[] = "abc";
+                char* str2[] = "abc";
+
+                if(str1 == str2)
+                    printf("test");
+            </desc>
+            <desc>czy tekst się wyświetli?</desc>
+            <answers type='radio'>
+                <true>nie</true>
+                <false>tak</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                char* str1[] = "abc";
+                char* str2[] = "abc";
+
+                if(strcmp(str1, str2) == 0)
+                    printf("test");
+            </desc>
+            <desc>czy tekst się wyświetli?</desc>
+            <answers type='radio'>
+                <true>tak</true>
+                <false>nie</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                float x = 1.0f/0.0f;
+            </desc>
+            <desc>Ile wynosi x?</desc>
+            <answers type='radio'>
+                <true>NaN</true>
+                <false>1</false>
+                <false>0</false>
+                <false>±∞</false>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                int func(void){
+                    printf("test");
+                    return 1;
+                }
+                int main(int argc, char** argv){
+                    if( 1 == 0 &amp;&amp; func() )
+                        return 0;
+                    else
+                        return -1;
+                }
+            </desc>
+            <desc>Czy "test" się wyświetli na ekranie?</desc>
+            <answers type='radio'>
+                <false>tak</false>
+                <true>nie</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                int func(void){
+                    printf("test");
+                    return 1;
+                }
+                int main(int argc, char** argv){
+                    if( 1 == 0 &amp; func() )
+                        return 0;
+                    else
+                        return -1;
+                }
+            </desc>
+            <desc>Czy "test" się wyświetli na ekranie i co zwróci main?</desc>
+            <answers type='radio'>
+                <true>tak, main zwróci -1</true>
+                <false>tak, main zwróci 0</false>
+                <false>nie, main zwróci -1</false>
+                <false>nie, main zwróci 0</false>
+            </answers>
+        </q>
+    </questions>
+</quiz>
