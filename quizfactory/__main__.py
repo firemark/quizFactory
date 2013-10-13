@@ -16,6 +16,8 @@ def set_parser():
                         type=int, help='Port of server')
     parser.add_argument('-H', '--host', metavar='HOST', default='0.0.0.0',
                         type=str, help='Host of server')
+    parser.add_argument('-d', '--debug', default=False, action='store_const',
+                        const=True, help='run in debug mode')
 
     return parser
 
@@ -24,7 +26,7 @@ def run(args):
 
     conf.load_conf(args)
 
-    app.debug = True
+    app.debug = args.debug
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
     app.config['SECRET_KEY'] = "Koszmar firemarka"
