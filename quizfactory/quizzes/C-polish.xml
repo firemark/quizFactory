@@ -16,6 +16,10 @@
         * pliki nagłówkowe
         * podstawy biblioteki standardowej (string.h, stdio.h)
         * znajomości ASCII
+        ##Autorzy
+        - Marek Piechula(Firemark)
+        ##Pomoc naukowa
+        [http://pl.wikibooks.org/wiki/C]
     </desc>
     <questions>
         <q>
@@ -94,6 +98,7 @@
                 <true>b=3</true>
                 <false>a=1</false>
                 <false>b=2</false>
+                <false>a=2</false>
             </answers>            
         </q>
         <q>
@@ -137,10 +142,11 @@
             </desc>
             <desc>Jakiego typu są zmienne?</desc>
             <answers type='checkbox'>
-                <true>a -> double*</true>
-                <true>b -> double</true>
-                <true>c -> double**</true>
-                <false>b -> double*</false>
+                <true>a -&gt; double*</true>
+                <true>b -&gt; double</true>
+                <true>c -&gt; double**</true>
+                <false>b -&gt; double*</false>
+                <false>c -&gt; double***</false>
             </answers>          
         </q>
         <q>
