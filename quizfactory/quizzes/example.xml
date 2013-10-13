@@ -55,5 +55,14 @@
                 <false>No</false>
             </answers>
         </q>
+        <q>
+            <desc>wtf?</desc>
+            <answers type="text">
+                <true>wtf!</true>
+                <true>wtf?</true>
+                <true>wtf</true>
+                <true>wtf.</true>
+            </answers>
+        </q>
     </questions>
 </quiz>

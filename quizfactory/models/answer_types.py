@@ -62,7 +62,7 @@ class CheckboxType(AbstractType):
     @classmethod
     def get_errors(cls, choice, answers):
         good_answers = cls.get_good_answers(answers)
-        return list(set(choice) - set(good_answers))
+        return list(set(good_answers) - set(choice))
 
     @staticmethod
     def set_choice():
@@ -87,5 +87,10 @@ class TextType(AbstractType):
 
     @classmethod
     def get_errors(cls, choice, answers):
-        gen = (v.text for v in answers.values() if v.is_correct)
+        choice = choice.strip()
+        gen = (v.text.strip() for v in answers.values() if v.is_correct)
         return cls.get_good_answers(answers) if choice not in gen else []
+
+    @classmethod
+    def is_valid(cls, input):
+        return isinstance(input, str)

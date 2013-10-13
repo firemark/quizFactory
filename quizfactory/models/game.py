@@ -33,7 +33,7 @@ class GameQuestion(object):
             "answers_type": q.answers_type.name
         }
 
-        if q.answers_type.allow:
+        if q.answers_type.allow or end:
             if end:
                 d = {v: {"text": k.text, "is_correct": k.is_correct}
                      for v, k in self.answers.items()}
