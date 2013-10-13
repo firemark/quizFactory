@@ -12,6 +12,10 @@ def set_parser():
                         help='path to quizzes dir')
     parser.add_argument('-f', '--format', metavar='FORMAT', default='xml',
                         help='format of file [now only xml]')
+    parser.add_argument('-p', '--port', metavar='PORT', default=8000,
+                        type=int, help='Port of server')
+    parser.add_argument('-H', '--host', metavar='HOST', default='0.0.0.0',
+                        type=str, help='Host of server')
 
     return parser
 
@@ -24,7 +28,7 @@ def run(args):
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
     app.config['SECRET_KEY'] = "Koszmar firemarka"
-    app.run('0.0.0.0', 8000)
+    app.run(args.host, args.port)
 
 if __name__ == '__main__':
     parser = set_parser()
