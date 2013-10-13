@@ -36,7 +36,7 @@ class GameQuestion(object):
         if q.answers_type.allow:
             if end:
                 d = {v: {"text": k.text, "is_correct": k.is_correct}
-                          for v, k in self.answers.items()}
+                     for v, k in self.answers.items()}
             else:
                 d = {v: {"text": k.text} for v, k in self.answers.items()}
 
@@ -51,6 +51,7 @@ class Game(object):
     questions = None
     end = False
     good_question = []  # question #0 -> True, question #1 -> False...
+    len_good_questions = 0
     len_questions = 0
 
     _pointer = 0
@@ -76,6 +77,7 @@ class Game(object):
     def finish(self):
         self.end = True
         self.good_question = [not bool(q.get_errors()) for q in self.questions]
+        self.len_good_questions = sum(self.good_question)  # True = 1 <3
 
     @property
     def pointer(self):
@@ -84,7 +86,6 @@ class Game(object):
     @classmethod
     def unserialize(cls, json):
         game = cls(json.question_key, False)
-
 
     def to_json(self):
         json = self.get_game_question().to_json(self.end)
@@ -95,6 +96,9 @@ class Game(object):
         })
 
         if self.end:
-            json["good_question"] = self.good_question
+            json.update({
+                "good_question": self.good_question,
+                "len_good_questions": self.len_good_questions
+            })
 
         return json

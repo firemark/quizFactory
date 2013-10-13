@@ -3,21 +3,23 @@
         <h4 class="panel-title">Question <strong>#<%-pointer+1%></strong></h4>
     </div>
     <div class="panel-body">
+        <div class='question-desc'>
         <% _.each(descs,function(desc,key,list){ %>
-        <div class="panel panel-primary">
-            <% if(desc.name){ %>
-                <div class="panel-heading"><%-desc.name%></div>
-            <% } %>
-            <div class="panel-body"><%=desc.html%></div>
-        </div>
+            <div class="panel panel-primary">
+                <% if(desc.name){ %>
+                    <div class="panel-heading"><%-desc.name%></div>
+                <% } %>
+                <div class="panel-body"><%=desc.html%></div>
+            </div>
         <% }); %>
-        <form onsubmit='return 0;'> <!-- opera :( -->
+        </div>
+        <form class='answers-form' onsubmit='return 0;'> <!-- opera :( -->
             <%= AnsTypeViews[answers_type].render(answers, choice, end) %>
         </form>
     </div>
     <div class="panel-footer text-center">
         <div class="btn-group">
-        <% if(pointer < len_questions){ %>
+        <% if(pointer > 0){ %>
             <button id='prev' class='btn btn-default'>prev</button>
         <% } %>
         <% if(!end){ %>
@@ -44,13 +46,17 @@
                 </button>
             <% } %>
         <% } %>
-        <% if(pointer < len_questions){ %>
+        <% if(pointer < len_questions-1){ %>
             <button id='next' class='btn btn-default'>next</button>
         <% } %>
         </div>
         <% if(!end){ %>
             <button id='finish' class='btn btn-primary'>finish</button>
         <% }else{ %>
+            <span class='score'>
+                Score:
+                <strong><%-len_good_questions%>/<%-len_questions%></strong>
+            </span>
             <button id='end-game' class='btn btn-primary'>end</button>
         <% } %>
     </div>
