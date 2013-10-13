@@ -19,9 +19,7 @@
     </div>
     <div class="panel-footer text-center">
         <div class="btn-group">
-        <% if(pointer > 0){ %>
-            <button id='prev' class='btn btn-default'>prev</button>
-        <% } %>
+        <button id='prev' class='btn btn-default' <%-pointer <= 0? 'disabled': ''%> >prev</button>
         <% if(!end){ %>
             <% for(var i=0; i < len_questions; i++){ %>
                 <button
@@ -46,9 +44,8 @@
                 </button>
             <% } %>
         <% } %>
-        <% if(pointer < len_questions-1){ %>
-            <button id='next' class='btn btn-default'>next</button>
-        <% } %>
+        
+        <button id='next' class='btn btn-default' <%-pointer >= len_questions-1? 'disabled': ''%> >next</button>
         </div>
         <% if(!end){ %>
             <button id='finish' class='btn btn-primary'>finish</button>
