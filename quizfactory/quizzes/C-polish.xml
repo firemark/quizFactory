@@ -268,5 +268,62 @@
                 <false>nie, main zwróci 0</false>
             </answers>
         </q>
+        <q>
+            <desc syntax="C">
+                void func(int *x){
+                    *x = 5;
+                }
+                int main(int argc, char** argv){
+                    int x = 10;
+                    func(&amp;(++x));
+                    printf("%d\n", x);
+                    return -1;
+                }
+            </desc>
+            <desc>Jaka liczba się wyświetli na ekranie?</desc>
+            <answers type='text'>
+                <true>5</true>
+                <true>pięć</true>
+                <true>piec</true>
+            </answers>
+        </q>
+        <q>
+            <desc syntax="C">
+                void func(int x){
+                    x = 5;
+                }
+                int main(int argc, char** argv){
+                    int x = 10;
+                    func(++x);
+                    printf("%d\n", x);
+                    return -1;
+                }
+            </desc>
+            <desc>Jaka liczba się wyświetli na ekranie?</desc>
+            <answers type='text'>
+                <true>11</true>
+                <true>jedenaście</true>
+                <true>jedenascie</true>
+            </answers>        
+        </q>
+        <q>
+            <desc name="file.h">
+                printf("test\n")
+            </desc>
+            <desc syntax="C">
+                int main(int argc, char** argv){
+                    #include "file.h"
+                    ;
+                    return -1;
+                }
+            </desc>
+            <desc>Czy test się wyświetli na ekranie?</desc>
+            <answers type='radio'>
+                <true>tak</true>
+                <false>nie</false>
+                <false>nie skompiluje się - brakuje średnika w file.h</false>
+                <false>nie skompiluje się - nie można robić include w funkcji</false>
+            </answers>        
+        </q>
     </questions>
 </quiz>
