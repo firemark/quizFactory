@@ -30,9 +30,9 @@
             <desc>Jaki typ powinnina mieć zmienna y?</desc>
             <answers type='radio'>
                 <true>char</true>
-                <false>*char</false>
-                <false>**char</false>
-                <false>***char</false>
+                <false>char*</false>
+                <false>char**</false>
+                <false>char***</false>
             </answers>
         </q>
         <q>
@@ -43,9 +43,9 @@
             <desc>Jaki typ powinnina mieć zmienna y?</desc>
             <answers type='radio'>
                 <false>char</false>
-                <true>*char</true>
-                <false>**char</false>
-                <false>***char</false>
+                <true>char*</true>
+                <false>char**</false>
+                <false>char***</false>
             </answers>
         </q>
         <q>
@@ -56,9 +56,9 @@
             <desc>Jaki typ powinnina zmienna y?</desc>
             <answers type='radio'>
                 <false>char</false>
-                <false>*char</false>
-                <false>**char</false>
-                <true>***char</true>
+                <false>char*</false>
+                <false>char**</false>
+                <true>char***</true>
             </answers>
         </q>
         <q>
@@ -69,8 +69,12 @@
                 }
             </desc>
             <desc>Ile razy wyświetli się napis *test*?</desc>
-            <answers type='text'>
+            <answers type='radio'>
                 <true>255</true>
+                <false>127</false>
+                <false>+∞</false>
+                <false>0</false>
+                <false>-1</false>
             </answers>
         </q>
         <q>
