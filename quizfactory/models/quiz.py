@@ -17,6 +17,11 @@ __all__ = ['Answer', 'Quiz', 'Description', 'Question', 'Quiz']
 
 formater = HtmlFormatter()
 
+try:
+    str_type = unicode
+except NameError:
+    str_type = str
+
 
 class BaseModel(object):
 
@@ -91,12 +96,15 @@ class Description(BaseModel):
     def to_json(self):
         return {
             "syntax": self.syntax,
-            "html": str(self),
+            "html": str_type(self),
             "name": self.name
         }
 
     def __repr__(self):
-        return "Description(%s, %s)" % (self.name, self.syntax)
+        return u"Description(%s, %s)" % (self.name, self.syntax)
+
+    def __unicode__(self):
+        return self.html or u"<pre>%s</pre>" % escape(self.text)
 
     def __str__(self):
         return self.html or "<pre>%s</pre>" % escape(self.text)
