@@ -1,20 +1,24 @@
 from quizfactory import app
 from quizfactory.models import Game
 from flask import session, jsonify, request
+import pickle
 
-games = {}
+
+def load_game(quiz_id):
+    try:
+        return pickle.loads(session[quiz_id])
+    except KeyError:
+        return None
 
 
-def get_game_from_session(quiz_id):
-    global games
-    return games[session[quiz_id]]
+def save_game(quiz_id, game):
+    session[quiz_id] = pickle.dumps(game)
 
 
 @app.fine_route()
 def get_game(quiz_id):
-    try:
-        game = get_game_from_session(quiz_id)
-    except KeyError:
+    game = load_game(quiz_id)
+    if not game:
         return jsonify(error="quiz not found"), 404
 
     return jsonify(**game.to_json())
@@ -22,23 +26,18 @@ def get_game(quiz_id):
 
 @app.fine_route()
 def post_game(quiz_id):
-    global games
-    try:
-        game = get_game_from_session(quiz_id)
-    except KeyError:
+    game = load_game(quiz_id)
+    if not game:
         game = Game(quiz_id)
-        id_game = id(game)
-        games[id_game] = game
-        session[quiz_id] = id_game
+        save_game(quiz_id, game)
 
     return jsonify(**game.to_json())
 
 
 @app.fine_route()
 def put_game(quiz_id):
-    try:
-        game = get_game_from_session(quiz_id)
-    except KeyError:
+    game = load_game(quiz_id)
+    if not game:
         return jsonify(error="quiz not found"), 404
 
     data = request.json
@@ -59,14 +58,14 @@ def put_game(quiz_id):
                 error="choice object is not a valid object to this answer"
             ), 403
 
+    save_game(quiz_id, Game(quiz_id))
     return jsonify(**game.to_json())
 
 
 @app.fine_route()
 def delete_game(quiz_id):
-    global games
     try:
-        del games[session[quiz_id]]
+        del session[quiz_id]
     except KeyError:
         return jsonify(error="quiz not found"), 404
 

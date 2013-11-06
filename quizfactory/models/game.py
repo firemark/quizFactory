@@ -47,7 +47,7 @@ class GameQuestion(object):
 
 class Game(object):
 
-    quiz = None
+    quiz_key = None
     questions = None
     end = False
     good_question = []  # question #0 -> True, question #1 -> False...
@@ -55,14 +55,14 @@ class Game(object):
     len_questions = 0
 
     _pointer = 0
+    _quiz = None
 
-    def __init__(self, key, randoms=True):
-        self.quiz = conf.quizzes[key]
+    def __init__(self, key):
+        self.quiz_key = key
 
         self.questions = [GameQuestion(q) for q in self.quiz.questions]
         self.len_questions = len(self.questions)
-        if randoms:
-            shuffle(self.questions)
+        shuffle(self.questions)
 
     def get_game_question(self):
         return self.questions[self._pointer]
@@ -83,9 +83,17 @@ class Game(object):
     def pointer(self):
         return self._pointer
 
-    @classmethod
-    def unserialize(cls, json):
-        game = cls(json.question_key, False)
+    @property
+    def quiz(self):
+        """Lazy getter"""
+        if not self._quiz:
+            self.quiz = conf.quizzes[self.quiz_key]
+        return self._quiz
+
+    def __getstate__(self):
+        odict = self.__dict__.copy()
+        odict['_quiz'] = None
+        return odict
 
     def to_json(self):
         json = self.get_game_question().to_json(self.end)

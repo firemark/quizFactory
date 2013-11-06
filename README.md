@@ -9,3 +9,8 @@
     python -m quizfactory -h
 
 Enjoy!
+
+##Todo
+    - Include python's functions in quizzes
+    - Include images
+    - add settings file
