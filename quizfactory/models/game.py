@@ -87,7 +87,7 @@ class Game(object):
     def quiz(self):
         """Lazy getter"""
         if not self._quiz:
-            self.quiz = conf.quizzes[self.quiz_key]
+            self._quiz = conf.quizzes[self.quiz_key]
         return self._quiz
 
     def __getstate__(self):
