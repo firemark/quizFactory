@@ -40,7 +40,7 @@
                 char x = 'a';
                 T y = &amp;x;
             </desc>
-            <desc>Jaki typ powinnina mieć zmienna y?</desc>
+            <desc>Jaki typ powinna mieć zmienna y?</desc>
             <answers type='radio'>
                 <false>char</false>
                 <true>char*</true>
@@ -53,7 +53,7 @@
                 char x = 'a';
                 T y = &amp;(&amp;(&amp;x));
             </desc>
-            <desc>Jaki typ powinnina zmienna y?</desc>
+            <desc>Jaki typ powinna mieć zmienna y?</desc>
             <answers type='radio'>
                 <false>char</false>
                 <false>char*</false>
