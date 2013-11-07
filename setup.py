@@ -2,6 +2,13 @@
 
 from setuptools import setup, find_packages
 
+install_requires = [
+    'Flask==0.10.1',
+    'Pygments==1.6',
+    'lxml==3.2.3',
+    'Markdown==2.3.1'
+]
+
 setup(
     name='QuizFactory',
     version='0.3',
@@ -12,5 +19,5 @@ setup(
     packages=find_packages(),
     license="MIT",
     test_suite="quizfactory.tests",
-    install_requires=['flask', 'pygments', 'lxml', 'markdown'],
+    install_requires=install_requires,
 )
