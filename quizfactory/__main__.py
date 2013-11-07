@@ -22,17 +22,18 @@ def set_parser():
     return parser
 
 
-def run(args):
+def setup(args):
 
     conf.load_conf(args)
 
     app.debug = args.debug
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
-    app.config['SECRET_KEY'] = "Koszmar firemarka"
-    app.run(args.host, args.port)
+    app.config['SECRET_KEY'] = getattr(args, 'SECRET_KEY', "Koszmar firemarka")
+
 
 if __name__ == '__main__':
     parser = set_parser()
     args = parser.parse_args()
-    run(args)
+    setup(args)
+    app.run(args.host, args.port)
