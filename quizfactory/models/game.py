@@ -9,9 +9,11 @@ class GameQuestion(object):
     answers = None
     question = None
     choice = None
+    number = 0
 
-    def __init__(self, q):
+    def __init__(self, i, q):
         self.question = q
+        self.number = i
         random_str = str(random()).encode('utf-8')
         self.answers = {  # hash: answer
             sha1(random_str + a.text.encode('utf-8')).hexdigest()[:8]: a
@@ -23,6 +25,11 @@ class GameQuestion(object):
     def get_errors(self):
         """Return list of errors (only keys)"""
         return self.question.answers_type.get_errors(self.choice, self.answers)
+
+    def __getstate__(self):
+        odict = self.__dict__.copy()
+        odict['question'] = None
+        return odict
 
     def to_json(self, end):
         q = self.question
@@ -60,7 +67,8 @@ class Game(object):
     def __init__(self, key):
         self.quiz_key = key
 
-        self.questions = [GameQuestion(q) for q in self.quiz.questions]
+        self.questions = [GameQuestion(i, q) for i, q
+                          in enumerate(self.quiz.questions)]
         self.len_questions = len(self.questions)
         shuffle(self.questions)
 
@@ -94,6 +102,12 @@ class Game(object):
         odict = self.__dict__.copy()
         odict['_quiz'] = None
         return odict
+
+    def __setstate__(self, odict):
+        self.__dict__.update(odict)
+
+        for q in self.questions:
+            q.question = self.quiz.questions[q.number]
 
     def to_json(self):
         json = self.get_game_question().to_json(self.end)

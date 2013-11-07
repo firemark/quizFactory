@@ -13,6 +13,7 @@ def load_game(quiz_id):
 
 def save_game(quiz_id, game):
     session[quiz_id] = pickle.dumps(game)
+    session.modified = True
 
 
 @app.fine_route()
@@ -58,7 +59,7 @@ def put_game(quiz_id):
                 error="choice object is not a valid object to this answer"
             ), 403
 
-    save_game(quiz_id, Game(quiz_id))
+    save_game(quiz_id, game)
     return jsonify(**game.to_json())
 
 
