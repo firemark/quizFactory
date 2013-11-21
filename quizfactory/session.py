@@ -32,8 +32,12 @@ class SqliteSession(MutableMapping, SessionMixin):
         self.conn = None
         if not os.path.exists(self.path):
             with self._get_conn() as conn:
-                conn.execute(self._create_sql)
-                self.new = True
+                try:
+                    conn.execute(self._create_sql)
+                except sqlite3.OperationalError:
+                    self.clear()
+                else:
+                    self.new = True
 
     def __getitem__(self, key):
         rv = None
