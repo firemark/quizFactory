@@ -59,7 +59,7 @@ class SqliteSession(MutableMapping, SessionMixin):
     def __iter__(self):
         with self._get_conn() as conn:
             for row in conn.execute(self._ite_sql):
-                yield loads(str(row[0]))
+                yield loads(row[0])
 
     def __len__(self):
         with self._get_conn() as conn:
@@ -69,6 +69,7 @@ class SqliteSession(MutableMapping, SessionMixin):
     def _get_conn(self):
         if not self.conn:
             self.conn = sqlite3.Connection(self.path)
+            self.conn.text_factory = str
         return self.conn
 
     class CallableAttributeProxy(object):
