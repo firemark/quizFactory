@@ -32,12 +32,8 @@ class SqliteSession(MutableMapping, SessionMixin):
         self.conn = None
         if not os.path.exists(self.path):
             with self._get_conn() as conn:
-                try:
-                    conn.execute(self._create_sql)
-                except sqlite3.OperationalError:
-                    self.clear()
-                else:
-                    self.new = True
+                conn.execute(self._create_sql)
+                self.new = True
 
     def __getitem__(self, key):
         rv = None
@@ -120,7 +116,7 @@ class SqliteSessionInterface(SessionInterface):
 
     def open_session(self, app, request):
         sid = request.cookies.get(app.session_cookie_name)
-        if not sid:
+        if not sid or len(sid) > 36:
             sid = str(uuid4())
         rv = SqliteSession(self.directory, sid)
         return rv
