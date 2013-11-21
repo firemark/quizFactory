@@ -6,13 +6,13 @@ import pickle
 
 def load_game(quiz_id):
     try:
-        return pickle.loads(session[quiz_id])
+        return session[quiz_id]
     except KeyError:
         return None
 
 
 def save_game(quiz_id, game):
-    session[quiz_id] = pickle.dumps(game)
+    session[quiz_id] = game
     session.modified = True
 
 

@@ -1,5 +1,6 @@
 from quizfactory import app, conf
-from os import path
+from os import path, mkdir, chmod
+from session import SqliteSessionInterface
 import argparse
 
 BASEDIR = path.dirname(__file__)
@@ -29,8 +30,14 @@ def setup(args):
     app.debug = args.debug
     app.template_folder = path.join(BASEDIR, "templates")
     app.static_folder = path.join(BASEDIR, "static")
-    app.config['SECRET_KEY'] = getattr(args, 'SECRET_KEY', "Koszmar firemarka")
+    session_dir = getattr(args, "session_dir", "/tmp/quizfactory/")
 
+    if not path.exists(session_dir):
+        mkdir(session_dir)
+        chmod(session_dir, int('700', 8))
+
+    app.config['SECRET_KEY'] = getattr(args, 'SECRET_KEY', "Koszmar firemarka")
+    app.session_interface = SqliteSessionInterface(session_dir)
 
 if __name__ == '__main__':
     parser = set_parser()
