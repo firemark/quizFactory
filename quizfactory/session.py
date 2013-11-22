@@ -1,6 +1,7 @@
 import os
 import errno
 import sqlite3
+import sys
 from uuid import uuid4
 from pickle import dumps, loads
 from collections import MutableMapping
@@ -46,7 +47,10 @@ class SqliteSession(MutableMapping, SessionMixin):
         return rv
 
     def __setitem__(self, key, value):
-        value = dumps(value, 2)
+        if sys.version < '3':
+            value = buffer(dumps(value, 2))
+        else:
+            value = dumps(value, 2)
         with self._get_conn() as conn:
             conn.execute(self._set_sql, (key, value))
         self.modified = True
@@ -69,7 +73,6 @@ class SqliteSession(MutableMapping, SessionMixin):
     def _get_conn(self):
         if not self.conn:
             self.conn = sqlite3.Connection(self.path)
-            self.conn.text_factory = str
         return self.conn
 
     class CallableAttributeProxy(object):
