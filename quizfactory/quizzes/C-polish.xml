@@ -226,10 +226,10 @@
             </desc>
             <desc>Ile wynosi x?</desc>
             <answers type='radio'>
-                <true>NaN</true>
+                <false>NaN</false>
                 <false>1</false>
                 <false>0</false>
-                <false>±∞</false>
+                <true>+∞</true>
             </answers>
         </q>
         <q>
