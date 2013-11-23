@@ -94,28 +94,14 @@
         <q>
             <desc syntax="C">
                 int a = 1;
-                int b = a++ + a++;
-            </desc>
-            <desc>Ile wynosi a oraz b?</desc>
-            <answers type='checkbox'>
-                <true>a=3</true>
-                <true>b=3</true>
-                <false>a=1</false>
-                <false>b=2</false>
-                <false>a=2</false>
-            </answers>            
-        </q>
-        <q>
-            <desc syntax="C">
-                int a = 1;
                 int b = ++a * ++a;
             </desc>
             <desc>Ile wynosi b?</desc>
             <answers type='radio'>
-                <true>9</true>
+                <false>9</false>
                 <false>6</false>
                 <false>2</false>
-                <false>5</false>
+                <true>nie da się jednoznacznie określić</true>
             </answers>            
         </q>
         <q>
